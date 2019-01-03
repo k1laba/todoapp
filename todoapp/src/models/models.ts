@@ -1,14 +1,14 @@
 export interface Person {
     id: string;
-    title: string;
-    tasks: Task[];
+    title?: string;
+    tasks?: Task[];
 }
 export interface Task {
-    id:string;
-    title:string;
-    description: string;
-    priority: Priority;
-    state: State;
+    id?:string;
+    title?:string;
+    description?: string;
+    priority?: Priority;
+    state?: State;
     personId?: string;
     estimate?: Date;
 }

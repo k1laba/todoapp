@@ -4,20 +4,20 @@
       <button type="button" class="btn btn-primary btn-sm" (click)="addPerson()">Add Person</button>
     </p>
 
-    <accordion>
-      <accordion-group [isOpen]="ind === 0" *ngFor="let person of persons; let ind = index" [heading]="person.title">
+    <accordion [closeOthers]="true">
+      <accordion-group [isOpen]="personIndex === (activePersonIndex$ | async)" *ngFor="let person of persons$ | async; let personIndex = index" [heading]="person.title">
         <div *ngIf="!person.id" accordion-heading>
-          <i (click)="removePerson(ind)" class="close">x</i>
+          <i (click)="removePerson(personIndex)" class="close">x</i>
           <input type="text" class="form-control" #newValue (keydown.enter)="savePerson(person, newValue.value)">
         </div>
         <div *ngIf="person.id">
-          <i (click)="removePerson(ind)" class="close">x</i>
+          <i (click)="removePerson(personIndex)" class="close">x</i>
           <div class="button-group">
-            <button type="button" class="btn btn-primary btn-sm" (click)="addTask(template, person.id)">Add Task</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="addTask(template, personIndex)">Add Task</button>
           </div>
-          <div class="task-wrapper" *ngFor="let task of person.tasks; let i = index">
-            <i (click)="removeTask(i, person)" class="close">x</i>
-            <p (click)="openModal(template, task)" class="task-title">{{task.title}}</p>
+          <div class="task-wrapper" *ngFor="let task of person.tasks; let taskIndex = index">
+            <i (click)="removeTask(taskIndex, personIndex)" class="close">x</i>
+            <p (click)="openModal(template, task, personIndex)" class="task-title">{{task.title}}</p>
           </div>
         </div>
       </accordion-group>
@@ -33,6 +33,7 @@
       <div class="modal-body">
         <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
           <div class="form-group">
+            <input type="hidden" formControlName="id" />
             <label class="label-control" for="title">Title</label>
             <input class="form-control" name="title" placeholder="title" formControlName="title" />
           </div>
@@ -42,7 +43,7 @@
           </div>
           <div class="form-group">
             <label for="estimate">Estimate</label>
-            <input type="text" class="form-control" name="estimate" #dp="bsDatepicker" formControlName="estimate" bsDatepicker
+            <input type="text" placeholder="estimate" class="form-control" name="estimate" #dp="bsDatepicker" formControlName="estimate" bsDatepicker
               [bsValue]="estimate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
           </div>
           <div class="form-group">
