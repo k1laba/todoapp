@@ -5,7 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { RemoveTaskAction, SaveTaskAction, SetActivePersonIndexAction } from '../app.action';
+import { RemoveTaskAction, SaveTaskAction, SetActivePersonIndexAction, AddPersonAction, RemovePersonAction, SavePersonAction } from '../app.action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -20,6 +20,7 @@ export class BoardComponent implements OnInit {
   public priorities = enumSelector(Priority);
   public states = enumSelector(State);
   public taskForm: FormGroup;
+  public oldName: string;
   modalRef: BsModalRef;
 
   constructor(private store: Store<AppState>, private modalService: BsModalService) {}
@@ -30,12 +31,11 @@ export class BoardComponent implements OnInit {
 
   }
   public addPerson() {
-    //this.persons = [...this.persons, { id: "", title: "", tasks: [] }];
+    this.store.dispatch(new AddPersonAction(""));
     return false;
   }
-  public savePerson(person: Person, title:string) {
-    person.title = title;
-    //person.id = this.persons.length.toString();
+  public savePerson(title:string, personIndex: number) {
+    this.store.dispatch(new SavePersonAction({title: title, personIndex: personIndex }));
     return false;
   }
   public addTask(template: TemplateRef<any>, personIndex: number) {
@@ -67,8 +67,7 @@ export class BoardComponent implements OnInit {
     return false;
   }
   public removePerson(index: number) {
-    // this.persons.splice(index, 1);
-    // this.persons = [...this.persons];
+    this.store.dispatch(new RemovePersonAction(index));
     return false;
   }
 }

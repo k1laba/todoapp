@@ -2,7 +2,6 @@ import { AppState } from "./app.state";
 import { TodoActionsUnion, TodoActionTypes } from "./app.action";
 import { createCopy } from 'src/utils';
 import { Priority, State } from 'src/models/models';
-import { SetActionsActive } from '@ngrx/store-devtools/src/actions';
 
 const initialState: AppState = {
     activePersonIndex: 0,
@@ -46,6 +45,28 @@ export const rootReducer = function (state: AppState = initialState, action: Tod
         case TodoActionTypes.SET_ACTIVE_PERSON_INDEX: {
             let stateCopy = createCopy(state);
             stateCopy.activePersonIndex = action.payload;
+            return { ...stateCopy };
+        }
+        case TodoActionTypes.ADD_PERSON: {
+            let stateCopy = createCopy(state);
+            stateCopy.persons = [...stateCopy.persons, { title: action.payload } ];
+            stateCopy.activePersonIndex = 0;
+            stateCopy.persons = stateCopy.persons.sort((a, b) => a.title.localeCompare(b.title));
+            return { ...stateCopy };
+        }
+        case TodoActionTypes.REMOVE_PERSON: {
+            let stateCopy = createCopy(state);
+            stateCopy.persons.splice(action.payload, 1);
+            stateCopy.persons = stateCopy.persons.sort((a, b) => a.title.localeCompare(b.title));
+            return { ...stateCopy };
+        }
+        case TodoActionTypes.SAVE_PERSON: {
+            let stateCopy = createCopy(state);
+            let person = stateCopy.persons[action.payload.personIndex];
+            person.title = action.payload.title;
+            person.id = person.id || (stateCopy.persons.length + 1).toString();
+            stateCopy.persons = stateCopy.persons.sort((a, b) => a.title.localeCompare(b.title));
+            stateCopy.activePersonIndex = stateCopy.persons.findIndex(p => p.id === person.id);
             return { ...stateCopy };
         }
         default:

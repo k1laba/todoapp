@@ -5,12 +5,17 @@
     </p>
 
     <accordion [closeOthers]="true">
-      <accordion-group [isOpen]="personIndex === (activePersonIndex$ | async)" *ngFor="let person of persons$ | async; let personIndex = index" [heading]="person.title">
-        <div *ngIf="!person.id" accordion-heading>
+      <accordion-group [isOpen]="personIndex === (activePersonIndex$ | async) && person.title" *ngFor="let person of persons$ | async; let personIndex = index"
+        [isDisabled]="!person.title">
+        <div *ngIf="!person.title" accordion-heading>
           <i (click)="removePerson(personIndex)" class="close">x</i>
-          <input type="text" class="form-control" #newValue (keydown.enter)="savePerson(person, newValue.value)">
+          <input type="text" class="form-control" placeholder="Person name" [value]="person.title" #newValue (keydown.enter)="savePerson(newValue.value, personIndex)">
         </div>
-        <div *ngIf="person.id">
+        <div accordion-heading>
+          <button *ngIf="person.title" class="btn btn-link">{{person.title}}</button>
+          <button *ngIf="person.title" (click)="person.title = ''" class="btn btn-link btn-edit">edit</button>
+        </div>
+        <div *ngIf="person.title">
           <i (click)="removePerson(personIndex)" class="close">x</i>
           <div class="button-group">
             <button type="button" class="btn btn-primary btn-sm" (click)="addTask(template, personIndex)">Add Task</button>
@@ -43,8 +48,8 @@
           </div>
           <div class="form-group">
             <label for="estimate">Estimate</label>
-            <input type="text" placeholder="estimate" class="form-control" name="estimate" #dp="bsDatepicker" formControlName="estimate" bsDatepicker
-              [bsValue]="estimate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+            <input type="text" placeholder="estimate" class="form-control" name="estimate" #dp="bsDatepicker"
+              formControlName="estimate" bsDatepicker [bsValue]="estimate || ''" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
           </div>
           <div class="form-group">
             <label class="label-control" for="priority">Priority</label>

@@ -1,6 +1,7 @@
 export interface Person {
-    id: string;
+    id?: string;
     title?: string;
+    oldTitle?:string;
     tasks?: Task[];
 }
 export interface Task {
