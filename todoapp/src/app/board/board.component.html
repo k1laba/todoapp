@@ -1,0 +1,72 @@
+<div class="persons-wrapper">
+  <div class="row">
+    <p>
+      <button type="button" class="btn btn-primary btn-sm" (click)="addPerson()">Add Person</button>
+    </p>
+
+    <accordion>
+      <accordion-group [isOpen]="ind === 0" *ngFor="let person of persons; let ind = index" [heading]="person.title">
+        <div *ngIf="!person.id" accordion-heading>
+          <i (click)="removePerson(ind)" class="close">x</i>
+          <input type="text" class="form-control" #newValue (keydown.enter)="savePerson(person, newValue.value)">
+        </div>
+        <div *ngIf="person.id">
+          <i (click)="removePerson(ind)" class="close">x</i>
+          <div class="button-group">
+            <button type="button" class="btn btn-primary btn-sm" (click)="addTask(template, person.id)">Add Task</button>
+          </div>
+          <div class="task-wrapper" *ngFor="let task of person.tasks; let i = index">
+            <i (click)="removeTask(i, person)" class="close">x</i>
+            <p (click)="openModal(template, task)" class="task-title">{{task.title}}</p>
+          </div>
+        </div>
+      </accordion-group>
+    </accordion>
+
+    <ng-template #template>
+      <div class="modal-header">
+        <h3>Task Editor</h3>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
+          <div class="form-group">
+            <label class="label-control" for="title">Title</label>
+            <input class="form-control" name="title" placeholder="title" formControlName="title" />
+          </div>
+          <div class="form-group">
+            <label class="label-control" for="description">Description</label>
+            <input class="form-control" name="description" placeholder="description" formControlName="description" />
+          </div>
+          <div class="form-group">
+            <label for="estimate">Estimate</label>
+            <input type="text" class="form-control" name="estimate" #dp="bsDatepicker" formControlName="estimate" bsDatepicker
+              [bsValue]="estimate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+          </div>
+          <div class="form-group">
+            <label class="label-control" for="priority">Priority</label>
+            <select class="form-control" name="priority" formControlName="priority">
+              <option *ngFor="let c of priorities;" [value]="c.value">
+                {{ c.title }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="label-control" for="state">State</label>
+            <select class="form-control" name="state" formControlName="state">
+              <option *ngFor="let c of states" [value]="c.value">
+                {{ c.title }}
+              </option>
+            </select>
+          </div>
+          <div class="button-group">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a (click)="modalRef.hide()" class="btn btn-default">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </div>
+</div>

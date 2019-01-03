@@ -10,14 +10,14 @@ namespace Todo.Api.Models
     {
         public virtual Guid Id { get; set; }
         public virtual string Title { get; set; }
-        public virtual string Description { get; set; }
-        public virtual Priority Priority { get; set; }
-        public virtual State State { get; set; }
-        public virtual DateTime? Estimate { get; set; }
     }
     public class TaskViewModel : BaseViewModel
     {
         public Guid? PersonId { get; set; }
+        public virtual string Description { get; set; }
+        public virtual Priority Priority { get; set; }
+        public virtual State State { get; set; }
+        public virtual DateTime? Estimate { get; set; }
     }
     public class PersonViewModel : BaseViewModel
     {
