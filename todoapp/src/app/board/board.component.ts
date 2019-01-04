@@ -5,7 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { RemoveTaskAction, SaveTaskAction, SetActivePersonIndexAction, AddPersonAction, RemovePersonAction, SavePersonAction, LoadDataAction } from '../app.action';
+import { RemoveTaskAction, SaveTaskAction, SetActivePersonIndexAction, AddPersonAction, RemovePersonSuccessAction, SavePersonAction, LoadDataAction, RemovePersonAction } from '../app.action';
 import { Observable } from 'rxjs';
 
 @Component({

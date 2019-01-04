@@ -13,6 +13,7 @@ import { rootReducer } from './app.reducer';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { PersonsEffects } from './effects/persons.effects';
+import { TasksEffects } from './effects/tasks.effects';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { PersonsEffects } from './effects/persons.effects';
     StoreModule.forRoot(null, { reducerFactory: () => rootReducer}),
     StoreDevtoolsModule.instrument(),
     HttpClientModule,
-    EffectsModule.forRoot([PersonsEffects])
+    EffectsModule.forRoot([PersonsEffects, TasksEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

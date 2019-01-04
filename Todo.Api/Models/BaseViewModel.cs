@@ -21,6 +21,14 @@ namespace Todo.Api.Models
     }
     public class PersonViewModel : BaseViewModel
     {
-        public List<TaskViewModel> Tasks { get; set; } = new List<TaskViewModel>();
+        private List<TaskViewModel> _tasks = new List<TaskViewModel>();
+        public List<TaskViewModel> Tasks
+        {
+            get { return _tasks; }
+            set
+            {
+                _tasks = value.OrderBy(i => i.Priority).ToList();
+            }
+        }
     }
 }

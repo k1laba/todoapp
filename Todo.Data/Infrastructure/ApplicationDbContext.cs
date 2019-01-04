@@ -22,7 +22,7 @@ namespace Todo.Data.Context
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>().HasMany(p => p.Tasks).WithOptional(p => p.Person).HasForeignKey(p => p.PersonId);
+            modelBuilder.Entity<Person>().HasMany(p => p.Tasks).WithOptional(p => p.Person).HasForeignKey(p => p.PersonId).WillCascadeOnDelete(true);
             base.OnModelCreating(modelBuilder);
         }
     }

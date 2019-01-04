@@ -15,7 +15,7 @@ export const rootReducer = function (state: AppState = initialState, action: Tod
             const data = action.payload;
             return { ...state, persons: [...data] };
         }
-        case TodoActionTypes.REMOVE_TASK: {
+        case TodoActionTypes.REMOVE_TASK_SUCCESS: {
             let stateCopy = createCopy(state);
             stateCopy.activePersonIndex = action.payload.personIndex;
             const person = stateCopy.persons[action.payload.personIndex];
@@ -45,7 +45,7 @@ export const rootReducer = function (state: AppState = initialState, action: Tod
             stateCopy.persons = stateCopy.persons.sort((a, b) => a.title.localeCompare(b.title));
             return { ...stateCopy };
         }
-        case TodoActionTypes.REMOVE_PERSON: {
+        case TodoActionTypes.REMOVE_PERSON_SUCCESS: {
             let stateCopy = createCopy(state);
             stateCopy.persons.splice(action.payload, 1);
             stateCopy.persons = stateCopy.persons.sort((a, b) => a.title.localeCompare(b.title));

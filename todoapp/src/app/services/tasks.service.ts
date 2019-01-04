@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Person } from 'src/models/models';
+import { Task } from 'src/models/models';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersonsService {
+export class TasksService {
 
   constructor(private http: HttpClient) { }
 
-  public get(): Observable<Person[]> {
-    return this.http.get<Person[]>(`${environment.api_url}/persons`);
+  public get(): Observable<Task[]> {
+    return this.http.get<Task[]>(`${environment.api_url}/tasks`);
   }
   public remove(id:string): Observable<object> {
-    return this.http.delete(`${environment.api_url}/persons/${id}`);
+    return this.http.delete(`${environment.api_url}/tasks/${id}`);
   }
 }

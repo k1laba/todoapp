@@ -3,20 +3,27 @@ import { Task, Person } from 'src/models/models';
 
 export const enum TodoActionTypes {
     REMOVE_TASK = "REMOVE_TASK",
+    REMOVE_TASK_SUCCESS = "REMOVE_TASK_SUCCESS",
     SAVE_TASK = "SAVE_TASK",
     SET_ACTIVE_PERSON_INDEX = "SET_ACTIVE_PERSON_INDEX",
     ADD_PERSON = "ADD_PERSON",
     REMOVE_PERSON = "REMOVE_PERSON",
+    REMOVE_PERSON_SUCCESS = "REMOVE_PERSON_SUCCESS",
     SAVE_PERSON = "SAVE_PERSON",
     LOAD_DATA = "LOAD_DATA",
     LOAD_DATA_SUCCESS = "LOAD_DATA_SUCCESS"
 }
 
-export type TodoActionsUnion = LoadDataSuccessAction | RemoveTaskAction | SaveTaskAction | SetActivePersonIndexAction | AddPersonAction
-                               | RemovePersonAction | SavePersonAction;
+export type TodoActionsUnion = LoadDataSuccessAction | RemoveTaskSuccessAction | SaveTaskAction 
+                              | SetActivePersonIndexAction | AddPersonAction
+                              | RemovePersonSuccessAction | SavePersonAction;
 
 export class RemoveTaskAction implements Action {
     readonly type = TodoActionTypes.REMOVE_TASK;
+    constructor(public payload: RemoveTaskActionPayload) { }
+}
+export class RemoveTaskSuccessAction implements Action {
+    readonly type = TodoActionTypes.REMOVE_TASK_SUCCESS;
     constructor(public payload: RemoveTaskActionPayload) { }
 }
 export class SaveTaskAction implements Action {
@@ -33,6 +40,10 @@ export class AddPersonAction implements Action {
 }
 export class RemovePersonAction implements Action {
     readonly type = TodoActionTypes.REMOVE_PERSON;
+    constructor(public payload: number) { }
+}
+export class RemovePersonSuccessAction implements Action {
+    readonly type = TodoActionTypes.REMOVE_PERSON_SUCCESS;
     constructor(public payload: number) { }
 }
 export class SavePersonAction implements Action {
