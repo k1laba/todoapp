@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { Task } from 'src/models/models';
+import { Task, Person } from 'src/models/models';
 
 export const enum TodoActionTypes {
     REMOVE_TASK = "REMOVE_TASK",
@@ -7,10 +7,12 @@ export const enum TodoActionTypes {
     SET_ACTIVE_PERSON_INDEX = "SET_ACTIVE_PERSON_INDEX",
     ADD_PERSON = "ADD_PERSON",
     REMOVE_PERSON = "REMOVE_PERSON",
-    SAVE_PERSON = "SAVE_PERSON"
+    SAVE_PERSON = "SAVE_PERSON",
+    LOAD_DATA = "LOAD_DATA",
+    LOAD_DATA_SUCCESS = "LOAD_DATA_SUCCESS"
 }
 
-export type TodoActionsUnion = RemoveTaskAction | SaveTaskAction | SetActivePersonIndexAction | AddPersonAction
+export type TodoActionsUnion = LoadDataSuccessAction | RemoveTaskAction | SaveTaskAction | SetActivePersonIndexAction | AddPersonAction
                                | RemovePersonAction | SavePersonAction;
 
 export class RemoveTaskAction implements Action {
@@ -36,6 +38,14 @@ export class RemovePersonAction implements Action {
 export class SavePersonAction implements Action {
     readonly type = TodoActionTypes.SAVE_PERSON;
     constructor(public payload: SavePersonActionPayload) { }
+}
+export class LoadDataAction implements Action {
+    readonly type = TodoActionTypes.LOAD_DATA;
+    constructor() { }
+}
+export class LoadDataSuccessAction implements Action {
+    readonly type = TodoActionTypes.LOAD_DATA_SUCCESS;
+    constructor(public payload: Person[]) { }
 }
 
 export interface SaveTaskActionPayload {

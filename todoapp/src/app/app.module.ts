@@ -10,6 +10,10 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { rootReducer } from './app.reducer';
 
+import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { PersonsEffects } from './effects/persons.effects';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +24,9 @@ import { rootReducer } from './app.reducer';
     AccordionModule.forRoot(), ButtonsModule.forRoot(), 
     ModalModule.forRoot(), BsDatepickerModule.forRoot(),
     StoreModule.forRoot(null, { reducerFactory: () => rootReducer}),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    HttpClientModule,
+    EffectsModule.forRoot([PersonsEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

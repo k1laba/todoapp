@@ -9,7 +9,7 @@ namespace Todo.Data.Entities
     public class BaseEntity
     {
         private DateTime _createDate = DateTime.UtcNow;
-        public virtual Guid Id { get; set; }
+        public virtual Guid Id { get; set; } = Guid.NewGuid();
         public virtual string Title { get; set; }
         public virtual DateTime CreateDate { get { return _createDate; } set { _createDate = value; } }
     }

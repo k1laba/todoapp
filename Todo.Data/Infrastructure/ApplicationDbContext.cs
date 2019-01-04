@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Todo.Data.Entities;
+using Todo.Data.Migrations;
 
 namespace Todo.Data.Context
 {
@@ -14,7 +15,7 @@ namespace Todo.Data.Context
     {
         public ApplicationDbContext() : base("ApplicationDbContext")
         {
-            var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
         public DbSet<Person> Persons { get; set; }
         public DbSet<TaskItem> Tasks { get; set; }

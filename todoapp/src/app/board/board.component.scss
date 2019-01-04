@@ -18,6 +18,9 @@
     .btn-add-task {
         margin-bottom: 15px;
     }
+    .person-title {
+        color: #54286C;
+    }
     .task-title,
     .edit-task-title {
         padding: 10px;
@@ -32,5 +35,10 @@
     }
     .btn-edit {
         float: right;
+        padding: 0;
+    }
+    .btn-edit::after {
+        content: "";
+        clear: both;
     }
 }

@@ -26,7 +26,7 @@ namespace Todo.Api.Controllers
             return await TryActionAsync(async () =>
             {
                 var data = await _service.LoadAllAsync();
-                var model = _mapper.Map<List<TEntity>>(data);
+                var model = _mapper.Map<List<TViewModel>>(data);
                 return Ok(model);
             });
         }

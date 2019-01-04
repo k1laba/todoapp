@@ -23,7 +23,7 @@ namespace Todo.Data.Repositories
         }
         public async virtual Task<IEnumerable<T>> LoadAllAsync()
         {
-            return await _ctx.Set<T>().OrderByDescending(s => s.Priority).ToListAsync();
+            return await _ctx.Set<T>().ToListAsync();
         }
 
         public async virtual Task<T> LoadAsync(Guid id)

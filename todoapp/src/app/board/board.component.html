@@ -12,7 +12,7 @@
           <input type="text" class="form-control" placeholder="Person name" [value]="person.title" #newValue (keydown.enter)="savePerson(newValue.value, personIndex)">
         </div>
         <div accordion-heading>
-          <button *ngIf="person.title" class="btn btn-link">{{person.title}}</button>
+          <span class="person-title">{{person.title}}</span>
           <button *ngIf="person.title" (click)="person.title = ''" class="btn btn-link btn-edit">edit</button>
         </div>
         <div *ngIf="person.title">
