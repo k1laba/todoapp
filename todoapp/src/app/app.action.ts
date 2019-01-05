@@ -1,22 +1,25 @@
 import { Action } from "@ngrx/store";
 import { Task, Person } from 'src/models/models';
+import { Guid } from 'guid-typescript';
 
 export const enum TodoActionTypes {
     REMOVE_TASK = "REMOVE_TASK",
     REMOVE_TASK_SUCCESS = "REMOVE_TASK_SUCCESS",
     SAVE_TASK = "SAVE_TASK",
+    SAVE_TASK_SUCCESS = "SAVE_TASK_SUCCESS",
     SET_ACTIVE_PERSON_INDEX = "SET_ACTIVE_PERSON_INDEX",
     ADD_PERSON = "ADD_PERSON",
     REMOVE_PERSON = "REMOVE_PERSON",
     REMOVE_PERSON_SUCCESS = "REMOVE_PERSON_SUCCESS",
     SAVE_PERSON = "SAVE_PERSON",
+    SAVE_PERSON_SUCCESS = "SAVE_PERSON_SUCCESS",
     LOAD_DATA = "LOAD_DATA",
     LOAD_DATA_SUCCESS = "LOAD_DATA_SUCCESS"
 }
 
-export type TodoActionsUnion = LoadDataSuccessAction | RemoveTaskSuccessAction | SaveTaskAction 
+export type TodoActionsUnion = LoadDataSuccessAction | RemoveTaskSuccessAction | SaveTaskSuccessAction 
                               | SetActivePersonIndexAction | AddPersonAction
-                              | RemovePersonSuccessAction | SavePersonAction;
+                              | RemovePersonSuccessAction | SavePersonAction | SavePersonSuccessAction;
 
 export class RemoveTaskAction implements Action {
     readonly type = TodoActionTypes.REMOVE_TASK;
@@ -30,9 +33,13 @@ export class SaveTaskAction implements Action {
     readonly type = TodoActionTypes.SAVE_TASK;;
     constructor(public payload: SaveTaskActionPayload) { }
 }
+export class SaveTaskSuccessAction implements Action {
+    readonly type = TodoActionTypes.SAVE_TASK_SUCCESS;
+    constructor(public payload: Task) { }
+}
 export class SetActivePersonIndexAction implements Action {
     readonly type = TodoActionTypes.SET_ACTIVE_PERSON_INDEX;
-    constructor(public payload: number) { }
+    constructor(public payload: string) { }
 }
 export class AddPersonAction implements Action {
     readonly type = TodoActionTypes.ADD_PERSON;
@@ -49,6 +56,10 @@ export class RemovePersonSuccessAction implements Action {
 export class SavePersonAction implements Action {
     readonly type = TodoActionTypes.SAVE_PERSON;
     constructor(public payload: SavePersonActionPayload) { }
+}
+export class SavePersonSuccessAction implements Action {
+    readonly type = TodoActionTypes.SAVE_PERSON_SUCCESS;
+    constructor(public payload: Person) { }
 }
 export class LoadDataAction implements Action {
     readonly type = TodoActionTypes.LOAD_DATA;
@@ -67,6 +78,6 @@ export interface RemoveTaskActionPayload {
     personIndex: number;
 }
 export interface SavePersonActionPayload {
-    personIndex: number;
     title: string;
+    index: number;
 }

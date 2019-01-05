@@ -18,11 +18,11 @@
         <div *ngIf="person.title">
           <i (click)="removePerson(personIndex)" class="close">x</i>
           <div class="button-group">
-            <button type="button" class="btn btn-primary btn-sm" (click)="addTask(template, personIndex)">Add Task</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="addTask(template, person.id)">Add Task</button>
           </div>
           <div class="task-wrapper" *ngFor="let task of person.tasks; let taskIndex = index">
             <i (click)="removeTask(taskIndex, personIndex)" class="close">x</i>
-            <p (click)="openModal(template, task, personIndex)" class="task-title">{{task.title}}</p>
+            <p (click)="openModal(template, task, person.id)" class="task-title">{{task.title}}</p>
           </div>
         </div>
       </accordion-group>

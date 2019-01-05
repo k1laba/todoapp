@@ -13,8 +13,8 @@ namespace Todo.Data.Repositories
     {
         Task<IEnumerable<T>> LoadAllAsync();
         Task<T> LoadAsync(Guid id);
-        Task<Guid> AddAsync(T entity, bool commit = true);
-        Task<Guid> EditAsync(T entity, bool commit = true);
+        Task<T> AddAsync(T entity, bool commit = true);
+        Task<T> EditAsync(T entity, bool commit = true);
         Task DeleteAsync(Guid id, bool commit = true);
         IUnitOfWork GetUnitOfWork();
     }

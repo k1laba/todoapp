@@ -21,9 +21,10 @@ namespace Todo.Business.Services
         {
             return await _repo.LoadAllAsync();
         }
-        public async virtual Task<Guid> SaveAsync(T model, bool commit = true)
+        public async virtual Task<T> SaveAsync(T model, bool commit = true)
         {
-            return model.Id != Guid.Empty ? await _repo.AddAsync(model, commit) : await _repo.EditAsync(model, commit);
+            var current = await _repo.LoadAsync(model.Id);
+            return current == null ? await _repo.AddAsync(model, commit) : await _repo.EditAsync(model, commit);
         }
         public async virtual Task<T> LoadAsync(Guid id)
         {

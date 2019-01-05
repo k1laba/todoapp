@@ -31,14 +31,14 @@ namespace Todo.Data.Repositories
             return await _ctx.Set<T>().AsNoTracking().SingleOrDefaultAsync(i => i.Id == id);
         }
 
-        public async virtual Task<Guid> AddAsync(T entity, bool commit = true)
+        public async virtual Task<T> AddAsync(T entity, bool commit = true)
         {
             _ctx.Set<T>().Add(entity);
             if (commit) { await _ctx.SaveChangesAsync(); }
-            return entity.Id;
+            return entity;
         }
 
-        public async virtual Task<Guid> EditAsync(T entity, bool commit = true)
+        public async virtual Task<T> EditAsync(T entity, bool commit = true)
         {
             var entry = _ctx.Entry(entity);
             if (entry.State == EntityState.Detached)
@@ -48,14 +48,17 @@ namespace Todo.Data.Repositories
             }
             entry.State = EntityState.Modified;
             if (commit) { await _ctx.SaveChangesAsync(); }
-            return entity.Id;
+            return entity;
         }
 
         public async virtual Task DeleteAsync(Guid id, bool commit = true)
         {
-            T entity = _ctx.Set<T>().Single(i => i.Id == id);
-            _ctx.Set<T>().Remove(entity);
-            if (commit) { await _ctx.SaveChangesAsync(); }
+            T entity = _ctx.Set<T>().SingleOrDefault(i => i.Id == id);
+            if (entity != null)
+            {
+                _ctx.Set<T>().Remove(entity);
+                if (commit) { await _ctx.SaveChangesAsync(); }
+            }
         }
 
         public IUnitOfWork GetUnitOfWork() => _uow;

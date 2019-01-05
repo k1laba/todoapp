@@ -10,7 +10,7 @@ namespace Todo.Business.Services
     {
         Task<IEnumerable<T>> LoadAllAsync();
         Task<T> LoadAsync(Guid id);
-        Task<Guid> SaveAsync(T viewModel, bool commit = true);
+        Task<T> SaveAsync(T viewModel, bool commit = true);
         Task DeleteAsync(Guid id, bool commit = true);
         IUnitOfWork GetUnitOfWork();
     }

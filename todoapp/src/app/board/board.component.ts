@@ -5,8 +5,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { RemoveTaskAction, SaveTaskAction, SetActivePersonIndexAction, AddPersonAction, RemovePersonSuccessAction, SavePersonAction, LoadDataAction, RemovePersonAction } from '../app.action';
+import { RemoveTaskAction, SaveTaskAction, SetActivePersonIndexAction, AddPersonAction, SavePersonAction, LoadDataAction, RemovePersonAction } from '../app.action';
 import { Observable } from 'rxjs';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-board',
@@ -36,23 +37,24 @@ export class BoardComponent implements OnInit {
     return false;
   }
   public savePerson(title:string, personIndex: number) {
-    this.store.dispatch(new SavePersonAction({title: title, personIndex: personIndex }));
+    this.store.dispatch(new SavePersonAction({ index: personIndex, title: title }));
     return false;
   }
-  public addTask(template: TemplateRef<any>, personIndex: number) {
-    this.openModal(template, {}, personIndex);
+  public addTask(template: TemplateRef<any>, personId: string) {
+    this.openModal(template, {}, personId);
   }
 
-  public openModal(template: TemplateRef<any>, task: Task, personIndex: number) {
+  public openModal(template: TemplateRef<any>, task: Task, personId: string) {
 
-    this.store.dispatch(new SetActivePersonIndexAction(personIndex));
+    this.store.dispatch(new SetActivePersonIndexAction(personId));
     this.taskForm = new FormGroup({
-      id: new FormControl(task.id),
+      id: new FormControl(task.id || Guid.create().toString()),
       title: new FormControl(task.title),
       description: new FormControl(task.description),
       priority: new FormControl(task.priority || 0),
       state: new FormControl(task.state || 0),
-      estimate: new FormControl(task.estimate)
+      estimate: new FormControl(task.estimate),
+      personId: new FormControl(personId)
     });
 
     this.modalRef = this.modalService.show(template);

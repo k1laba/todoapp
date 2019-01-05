@@ -36,8 +36,8 @@ namespace Todo.Api.Controllers
             return await TryActionAsync(async () =>
             {
                 var entity = _mapper.Map<TEntity>(model);
-                await _service.SaveAsync(entity);
-                return Ok();
+                entity = await _service.SaveAsync(entity);
+                return Ok(entity);
             });
         }
         [HttpDelete]

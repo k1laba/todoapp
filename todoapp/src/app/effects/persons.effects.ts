@@ -3,9 +3,10 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { PersonsService } from '../services/persons.service';
 import { switchMap, map, withLatestFrom } from 'rxjs/operators';
-import { TodoActionTypes, LoadDataSuccessAction, RemovePersonAction, RemovePersonSuccessAction } from '../app.action';
+import { TodoActionTypes, LoadDataSuccessAction, RemovePersonAction, RemovePersonSuccessAction, SavePersonAction, SavePersonSuccessAction } from '../app.action';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../app.state';
+import { Guid } from 'guid-typescript';
 
 
 @Injectable()
@@ -20,11 +21,21 @@ export class PersonsEffects {
       switchMap(() => this.personsService.get()),
       switchMap(res => of(new LoadDataSuccessAction(res)))
   );
+  @Effect() save$ = this.actions$.pipe(ofType(TodoActionTypes.SAVE_PERSON),
+      map((action:SavePersonAction) => action.payload),
+      withLatestFrom(this.store.pipe(select(s => s.persons))),
+      switchMap(([payload, persons]) => {
+        const person = persons[payload.index];
+        return  this.personsService.save(person).pipe(map((res) => new SavePersonSuccessAction(res)));
+      })
+  );
   @Effect() remove$ = this.actions$.pipe(ofType(TodoActionTypes.REMOVE_PERSON),
       map((action:RemovePersonAction) => action.payload),
       withLatestFrom(this.store.pipe(select(s => s.persons))),
       switchMap(([index, persons]) => {
-        return  this.personsService.remove(persons[index].id).pipe(map(() => new RemovePersonSuccessAction(index)));
+        const personId = persons[index].id;
+        if (!personId) { return of(new RemovePersonSuccessAction(index)); }
+        return  this.personsService.remove(personId).pipe(map(() => new RemovePersonSuccessAction(index)));
       })
   );
 }
