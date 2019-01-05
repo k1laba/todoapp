@@ -8,12 +8,12 @@ import { BoardComponent } from './board/board.component';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { rootReducer } from './app.reducer';
+import { rootReducer } from './store/app.reducer';
 
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
-import { PersonsEffects } from './effects/persons.effects';
-import { TasksEffects } from './effects/tasks.effects';
+import { PersonsEffects } from './store/effects/persons.effects';
+import { TasksEffects } from './store/effects/tasks.effects';
 
 @NgModule({
   declarations: [

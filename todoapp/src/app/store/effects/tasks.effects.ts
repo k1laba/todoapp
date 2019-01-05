@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { TasksService } from '../services/Tasks.service';
+import { TasksService } from '../../services/Tasks.service';
 import { switchMap, map, withLatestFrom } from 'rxjs/operators';
 import { TodoActionTypes, LoadDataSuccessAction, RemoveTaskAction, RemoveTaskSuccessAction, SaveTaskAction, SaveTaskSuccessAction } from '../app.action';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { Guid } from 'guid-typescript';
 
 
 @Injectable()
